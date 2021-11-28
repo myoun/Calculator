@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        table, th, td {
+            border:1px solid black;
+        } 
+        th {
+            width: 3rem;
+            height: 3rem;
+        }
+        .numborder {
+            border:4px solid black;
+            text-align: right;
+            width: 13.35rem;
+            height: 3rem;
+        }
+        .numborder p {
+            margin-right: 0.5rem;
+        }
+        #upside {
+            font-size: 0.5rem;
+            margin: 0;
+            margin-right: 0.5rem;
+        }
+        #result {
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+        html {
+            all: unset;
+            -webkit-user-drag: element;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class=numborder>
+            <p id=upside></span>
+            <p id=result></span>
+        </div>
+        <table>
+            <tr>
+                <th id=pi>π</th>
+                <th id=per>%</th>
+                <th id=c>C</th>
+                <th id=bs>←</th>
+            </tr>
+            <tr>
+                <th id=seven>7</th>
+                <th id=eight>8</th>
+                <th id=nine>9</th>
+                <th id=divide>÷</th>
+            </tr>
+            <tr>
+                <th id=four>4</th>
+                <th id=five>5</th>
+                <th id=six>6</th>
+                <th id=multiply>x</th>
+            </tr>   
+            <tr>
+                <th id=one>1</th>
+                <th id=two>2</th>
+                <th id=three>3</th>
+                <th id=minus>-</th>
+            </tr>
+            <tr>
+                <th id=zero>0</th>
+                <th id=point>.</th>
+                <th id=equal>=</th>
+                <th id=plus>+</th>
+            </tr>
+        </table>
+    </div>
+    <script>
+        function n(id, num) {
+            document.getElementById(id).addEventListener("click", (ev) => {
+                let cont =document.getElementById("result").innerHTML
+                if (cont == "0") document.getElementById("result").innerHTML = num
+                else document.getElementById("result").innerHTML = cont+num
+            })
+        }
+    </script>
+    <script>
+        window.onload = () => {
+            document.getElementById("result").innerHTML = "0"
+            document.getElementById("upside").innerHTML = "C"
+        }
+        
+        document.getElementById("bs").addEventListener("click", (ev) => {
+            let cont =document.getElementById("result").innerHTML
+            if (cont=="0") return
+            else if (cont.length==1) document.getElementById("result").innerHTML = "0"
+            else document.getElementById("result").innerHTML = cont.slice(0, cont.length-1)
+        })
+        n("one", "1")
+        n("two", "2")
+        n("three", "3")
+        n("four", "4")
+        n("five", "5")
+        n("six", "6")
+        n("seven", "7")
+        n("eight", "8")
+        n("nine", "9")
+        
+        document.getElementById("per").addEventListener("click", (ev) => {
+                let cont =document.getElementById("result").innerHTML
+                if (cont.includes("%")) return
+                else document.getElementById("result").innerHTML = cont+"%"
+        })
+        
+        document.getElementById("pi").addEventListener("click", (ev) => {
+                let cont =document.getElementById("result").innerHTML
+                if (cont.includes("π")) return
+                else if (cont == "0") document.getElementById("result").innerHTML = "π"
+                else {
+                    let cont =document.getElementById("result").innerHTML
+                    let ucont = document.getElementById("upside").innerHTML
+                    if (ucont.startsWith("C")) {
+                        document.getElementById("upside").innerHTML = cont+" x"
+                        document.getElementById("result").innerHTML = "π"
+                        return
+                    } else if ((ucont.endsWith("+") || ucont.endsWith("-") || ucont.endsWith("x") || ucont.endsWith("÷")) && cont == "0") {
+                        document.getElementById("upside").innerHTML = ucont.slice(0, ucont.length-2)+" x"
+                    } else {
+                        document.getElementById("upside").innerHTML = ucont+" "+cont+" x"
+                        document.getElementById("result").innerHTML = "π"
+                    }
+                }
+        })
+        document.getElementById("zero").addEventListener("click", (ev) => {
+            let cont =document.getElementById("result").innerHTML
+            if (cont == "0") return
+            else document.getElementById("result").innerHTML = cont+"0"
+        })
+        document.getElementById("point").addEventListener("click", (ev) => {
+            let cont =document.getElementById("result").innerHTML
+            if (cont.includes(".")) return
+            else document.getElementById("result").innerHTML = cont+"."
+        })
+        document.getElementById("plus").addEventListener("click", (ev) => {
+            let cont =document.getElementById("result").innerHTML
+            let ucont = document.getElementById("upside").innerHTML
+            if (ucont.startsWith("C")) {
+                document.getElementById("upside").innerHTML = cont+" +"
+                document.getElementById("result").innerHTML = "0"
+                return
+            } else if ((ucont.endsWith("+") || ucont.endsWith("-") || ucont.endsWith("x") || ucont.endsWith("÷")) && cont == "0") {
+                document.getElementById("upside").innerHTML = ucont.slice(0, ucont.length-2)+" +"
+            } else {
+                document.getElementById("upside").innerHTML = ucont+" "+cont+" +"
+                document.getElementById("result").innerHTML = "0"
+            }
+        })
+        document.getElementById("minus").addEventListener("click", (ev) => {
+            let cont =document.getElementById("result").innerHTML
+            let ucont = document.getElementById("upside").innerHTML
+            if (ucont.startsWith("C")) {
+                document.getElementById("upside").innerHTML = cont+" -"
+                document.getElementById("result").innerHTML = "0"
+                return
+            } else if ((ucont.endsWith("+") || ucont.endsWith("-") || ucont.endsWith("x") || ucont.endsWith("÷")) && cont == "0") {
+                document.getElementById("upside").innerHTML = ucont.slice(0, ucont.length-2)+" -"
+            } else {
+                document.getElementById("upside").innerHTML = ucont+" "+cont+" -"
+                document.getElementById("result").innerHTML = "0"
+            }
+        })
+        document.getElementById("divide").addEventListener("click", (ev) => {
+            let cont =document.getElementById("result").innerHTML
+            let ucont = document.getElementById("upside").innerHTML
+            if (ucont.startsWith("C")) {
+                document.getElementById("upside").innerHTML = cont+" ÷"
+                document.getElementById("result").innerHTML = "0"
+                return
+            } else if ((ucont.endsWith("+") || ucont.endsWith("-") || ucont.endsWith("x") || ucont.endsWith("÷")) && cont == "0") {
+                document.getElementById("upside").innerHTML = ucont.slice(0, ucont.length-2)+" ÷"
+            } else {
+                document.getElementById("upside").innerHTML = ucont+" "+cont+" ÷"
+                document.getElementById("result").innerHTML = "0"
+            }
+        })
+        document.getElementById("multiply").addEventListener("click", (ev) => {
+            let cont =document.getElementById("result").innerHTML
+            let ucont = document.getElementById("upside").innerHTML
+            if (ucont.startsWith("C")) {
+                document.getElementById("upside").innerHTML = cont+" x"
+                document.getElementById("result").innerHTML = "0"
+                return
+            } else if ((ucont.endsWith("+") || ucont.endsWith("-") || ucont.endsWith("x") || ucont.endsWith("÷")) && cont == "0") {
+                document.getElementById("upside").innerHTML = ucont.slice(0, ucont.length-2)+" x"
+            } else {
+                document.getElementById("upside").innerHTML = ucont+" "+cont+" x"
+                document.getElementById("result").innerHTML = "0"
+            }
+        })
+        document.getElementById("c").addEventListener("click", (ev) => {
+            document.getElementById("result").innerHTML = "0"
+            document.getElementById("upside").innerHTML = "C"
+        })
+
+        document.getElementById("equal").addEventListener("click", (ev) => {
+            let formula = (document.getElementById("upside").innerHTML + " " + 
+                document.getElementById("result").innerHTML).replace(/x/gi,"*").replace(/÷/gi,"/")
+                .replace(/%/gi,"*0.01").replace(/C/gi, "0 +").replace(/π/gi,Math.PI.toString())
+            console.log(formula)
+            let result = new Function(`return ${formula}`)();
+            document.getElementById("upside").innerHTML = "C"
+            document.getElementById("result").innerHTML = result
+        })
+    </script>
+</body>
+</html>
